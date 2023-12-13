@@ -7,8 +7,26 @@ on:
   push:
     branches:
       - '*'
+    paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'editorconfig'
+      - '.github/**'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'README*'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'editorconfig'
+      - '.github/**'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'README*'
 
 jobs:
   build:
