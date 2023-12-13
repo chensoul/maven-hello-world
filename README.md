@@ -132,40 +132,53 @@ Check your maven settings file `～/.m2/settings.xml`:
     </server>
 ```
 
-Update pom version:
+According to [publish-maven](https://central.sonatype.org/publish/publish-maven/), you can do these as below.
+
+### Performing a Snapshot Deployment
+
+Snapshot deployment are performed when your version ends in -SNAPSHOT . You do not need to fulfill the requirements when
+performing snapshot deployments and can simply run
 
 ```bash
-mvn -B build-helper:parse-version versions:set -DnewVersion=0.0.2-SNAPSHOT versions:commit 
+mvn -B clean deploy
 ```
 
-Create new branch with next version, it won't update the working copy version:
+SNAPSHOT versions are not synchronized to the Central Repository. If you wish your users to consume your SNAPSHOT
+versions, they would need to add the snapshot repository to their Nexus Repository Manager, settings.xml, or pom.xml.
+Successfully deployed SNAPSHOT versions will be found in https://s01.oss.sonatype.org/content/repositories/snapshots/
+
+### Performing a Release Deployment
+
+Change version with the Maven versions plugin.
 
 ```bash
-mvn -B release:branch -DbranchName=my-branch -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
+mvn versions:set -DnewVersion=1.2.3 versions:commit
 ```
 
-Release to local staging (push tag to github using username and password):
+Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
 
 ```bash
-mvn -B release:clean release:prepare release:perform
+mvn clean deploy -P release
 ```
 
-GPG to sign and release to sonatype using release profile:
+Release to the central repository:
 
 ```bash
-mvn -B clean deploy -Prelease -Dgpg.passphrase=<PASSPHRASE_GPG> -Dusername=<OSSRH_USERNAME> -Dpassword=<OSSRH_TOKEN>
-
-# reading gpg.passphrase, username and password from settings.xml
-mvn -B clean deploy -Prelease
+mvn clean deploy -P release -DautoReleaseAfterClose=true
 ```
 
-Release to sonatype (push tag to github using username and password); sign and snapshot to local staging:
+### Manually Releasing the Deployment to the Central Repository
+
+You can simply release the staging repository with
 
 ```bash
-mvn -B release:clean release:prepare release:perform deploy -Prelease -DautoReleaseAfterClose=true
+mvn nexus-staging:release -P release -DautoReleaseAfterClose=true
 ```
+
+### Manually Publish the site to github pages
 
 Publish to github pages:
+
 ```bash
 mvn site scm-publish:publish-scm
 ```
