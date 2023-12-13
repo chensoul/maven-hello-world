@@ -6,11 +6,11 @@ Getting started with Maven Release Plugin and Github Action
 
 Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the version
 
-| Type     | URL                                                                                                     | Description       |
-|:---------|:--------------------------------------------------------------------------------------------------------|:------------------|
-| Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/) | Snapshot versions |
-| Release  | [sonatype](https://repo.maven.apache.org/maven2/com/chensoul/maven-hello-world/)                        | Release versions  |
-| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/) | Release versions  |
+| Type     | URL                                                                                                     | Description                |
+|:---------|:--------------------------------------------------------------------------------------------------------|:---------------------------|
+| Snapshot | [sonatype](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/) | Sonatype Snapshot versions |
+| Release  | [maven](https://repo.maven.apache.org/maven2/com/chensoul/maven-hello-world/)                           | Maven Release versions     |
+| Release  | [central-sonatype](https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/)               | Sonatype Release versions  |
 
 ## Documentation
 
@@ -169,8 +169,3 @@ Publish to github pages:
 ```bash
 mvn site scm-publish:publish-scm
 ```
-
-## Authors
-
-- [@naturalett](https://www.github.com/naturalett)
-- [@chensoul](https://www.github.com/chensoul)
