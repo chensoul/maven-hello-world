@@ -26,7 +26,6 @@ on:
 
 jobs:
   build:
-    name: 'Job: Maven Verify'
     permissions:
       contents: 'read'
     runs-on: 'ubuntu-latest'
