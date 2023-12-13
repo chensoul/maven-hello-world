@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.chensoul</groupId>
+        <artifactId>chensoul-parent</artifactId>
+        <version>1.0.15-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.chensoul</groupId>
+    <artifactId>maven-hello-world</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.29-SNAPSHOT</version>
+
+    <name>${project.artifactId}</name>
+    <description>A lightweight Maven hello world</description>
+    <inceptionYear>2023</inceptionYear>
+    <url>https://chensoul.github.io/maven-hello-world/</url>
+
+    <scm>
+        <url>https://github.com/chensoul/maven-hello-world/</url>
+        <connection>scm:git:https://github.com/chensoul/maven-hello-world.git</connection>
+        <developerConnection>scm:git:https://github.com/chensoul/maven-hello-world.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/chensoul/maven-hello-world/issues</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <site>
+            <id>Github Pages</id>
+            <name>ChenSoul™ Maven Hello World</name>
+            <url>https://chensoul.github.io/maven-hello-world/</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
