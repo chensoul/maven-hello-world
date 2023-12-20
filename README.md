@@ -96,7 +96,8 @@ public class App {
 
 ## GPG
 
-After generating gpg key following by [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
+After generating gpg key following
+by [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
 
 ```bash
 gpg --gen-key
@@ -155,7 +156,8 @@ Change version with the Maven versions plugin.
 mvn versions:set -DnewVersion=1.2.3 versions:commit
 ```
 
-Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
+Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release
+profile:
 
 ```bash
 mvn clean deploy -P release

@@ -11,7 +11,7 @@
         <src>https://avatars.githubusercontent.com/u/826932?s=60</src>
         <href>${this.url}</href>
     </bannerRight>
-<!--    <version position="right"/>-->
+    <!--    <version position="right"/>-->
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
