@@ -1,0 +1,118 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'editorconfig'
+      - '.github/**'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'gitmoji.md'
+      - 'CHANGELOG.md'
+      - 'LICENSE'
+      - 'README*'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'editorconfig'
+      - '.github/**'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'gitmoji.md'
+      - 'CHANGELOG.md'
+      - 'LICENSE'
+      - 'README*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        java-version: [ 8 ]
+        os: [ "ubuntu-latest" ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+          key: ${{ matrix.os }}-${{ hashFiles('pom.xml', '**/pom.xml', '**/**/pom.xml') }}
+          restore-keys: |
+            ${{ matrix.os }}-
+
+      - name: CI ENV
+        shell: sh
+        run: |
+          env
+          echo $GITHUB_RUN_ID
+          echo $GITHUB_JOB-${{ matrix.java-version }}
+          echo "CI_PIPELINE_ID=$GITHUB_RUN_ID" >> $GITHUB_ENV
+          echo "CI_JOB_ID=$GITHUB_JOB-${{ matrix.java-version }}" >> $GITHUB_ENV
+
+      - name: Build with Maven
+        run: mvn clean -e -U package source:jar javadoc:jar install -DskipTests
+
+  # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
+  dependabot:
+    name: Dependabot
+    # 需要所有 build 完成后，才运行
+    needs: build
+    runs-on: ${{ matrix.os }}
+    permissions:
+      # 可以修改仓库中的文件内容
+      contents: write
+      # # 可以新建或修改 Pull Request
+      pull-requests: write
+    # 依赖机器人 && 仅PR
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+
+    strategy:
+      matrix:
+        os: [ "ubuntu-latest" ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # 获取所有的代码历史记录，包括分支和标签
+          fetch-depth: 0
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: echo
+        run: |
+          echo ${{ github.event.pull_request.html_url }}
+          echo ${{ steps.metadata.outputs.dependency-names }}
+          echo ${{ steps.metadata.outputs.update-type }}
+          echo ${{ 'version-update:semver-patch' }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        # if: ${{contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
