@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 public class App {
+
 	/**
 	 * main method
 	 *
@@ -23,6 +24,7 @@ public class App {
 	}
 
 	static class MyHandler implements HttpHandler {
+
 		@Override
 		public void handle(HttpExchange t) throws IOException {
 			String response = "<h1> Hello World! </h1>";
@@ -31,5 +33,7 @@ public class App {
 			os.write(response.getBytes());
 			os.close();
 		}
+
 	}
+
 }
