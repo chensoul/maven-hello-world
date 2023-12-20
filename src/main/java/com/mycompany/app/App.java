@@ -8,11 +8,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
+/**
+ *
+ */
 public class App {
+
+	private App() {
+	}
 
 	/**
 	 * main method
-	 *
 	 * @param args arguments
 	 * @throws IOException exception
 	 */
