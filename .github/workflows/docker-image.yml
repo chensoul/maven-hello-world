@@ -23,6 +23,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - run: |
+          env
       - name: Build And Push
         uses: docker/build-push-action@v3
         with:
