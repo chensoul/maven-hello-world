@@ -23,7 +23,12 @@ jobs:
 
       - name: Determine tag name
         id: tag
-        run: echo "::set-output name=tag::$(echo ${GITHUB_REF#refs/tags/})"
+        run: |
+          if [[ "${{ github.ref }}" == "refs/tags/"* ]]; then
+            echo "::set-output name=tag::${{ github.ref#refs/tags/ }}"
+          elif [[ "${{ github.ref }}" == "refs/heads/"* ]]; then
+            echo "::set-output name=tag::${{ github.ref#refs/heads/ }}"
+          fi
 
       - name: Build image
         run: |
