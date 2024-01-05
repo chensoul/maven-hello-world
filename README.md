@@ -150,31 +150,32 @@ Successfully deployed SNAPSHOT versions will be found in https://s01.oss.sonatyp
 
 ### Performing a Release Deployment
 
-Change version with the Maven versions plugin.
+In order to perform a release deployment you have to edit your version in all your POM files to use release versions.
 
 ```bash
 mvn versions:set -DnewVersion=1.2.3 versions:commit
 ```
 
-Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release
-profile:
+Install to local repository `~/.m2/repository`:
 
 ```bash
-mvn clean deploy -P release
+mvn clean install
 ```
 
-Release to the central repository:
+Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
 
 ```bash
 mvn clean deploy -P release -DautoReleaseAfterClose=true
 ```
 
-### Manually Releasing the Deployment to the Central Repository
+And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the repository.
+Wait a few minutes and then you can find the release version in https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/
+or https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/ .
 
-You can simply release the staging repository with
+If you want to release to the release repository directly, you can add parameter `-DautoReleaseAfterClose=true` to the command line:
 
 ```bash
-mvn clean nexus-staging:release -P release -DautoReleaseAfterClose=true
+mvn clean deploy -Prelease -DautoReleaseAfterClose=true
 ```
 
 ### Manually Publish the site to github pages

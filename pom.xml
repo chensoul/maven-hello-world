@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.chensoul</groupId>
         <artifactId>chensoul-parent</artifactId>
-        <version>1.0.36-SNAPSHOT</version>
+        <version>1.0.37</version>
     </parent>
 
     <groupId>com.chensoul</groupId>
     <artifactId>maven-hello-world</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.31</version>
+    <version>0.0.32-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <description>A lightweight Maven hello world</description>
