@@ -5,6 +5,10 @@ on:
     branches: [main]
   release:
     types: [created, published] # 表示在创建新的 Release 时触发
+    
+env:
+  # TODO: Change variable to your image's name.
+  IMAGE_NAME: test
 
 jobs:
   build_docker:
@@ -20,7 +24,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/$GITHUB_REPOSITORY
+            ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
