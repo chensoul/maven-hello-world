@@ -1,8 +1,6 @@
 name: build_docker
 
 on:
-  push:
-    branches: [main]
   release:
     types: [created] # 在创建正式的 Release 时触发
 
