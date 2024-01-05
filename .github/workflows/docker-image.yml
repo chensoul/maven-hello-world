@@ -7,7 +7,7 @@ on:
     types: [created, published] # 表示在创建新的 Release 时触发
     
 env:
-  REGISTRY_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}
+  REGISTRY_IMAGE: chensoul/${{ github.repository }}
 
 jobs:
   build_docker:
