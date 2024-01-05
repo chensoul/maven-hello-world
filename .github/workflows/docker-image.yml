@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      # see https://docs.docker.com/build/ci/github-actions/manage-tags-labels/  
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
