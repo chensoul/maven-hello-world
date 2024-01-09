@@ -25,10 +25,10 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 
 ## Secrets
 
-* **MAVEN_GPG_PRIVATE_KEY** - Take it from the private.gpg
+* **GPG_PRIVATE_KEY** - Take it from the private.gpg
 * **OSSRH_USERNAME** - Created [here](https://issues.sonatype.org/)
 * **OSSRH_TOKEN** - Created [here](https://issues.sonatype.org/)
-* **MAVEN_GPG_PASSPHRASE** - Create [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
+* **GPG_PASSPHRASE** - Create [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
     * This passphrase and your private key are all that is needed to sign artifacts with your signature.
 * **GITHUB_TOKEN** - Github token
 
@@ -162,21 +162,16 @@ Install to local repository `~/.m2/repository`:
 mvn clean install
 ```
 
-Release to the staging repository https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ with the release profile:
+Release to the staging repositorywith the release profile:
 
 ```bash
-mvn clean deploy -P release -DautoReleaseAfterClose=true
+mvn clean deploy -P release
 ```
 
 And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the repository.
 Wait a few minutes and then you can find the release version in https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/
 or https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/ .
 
-If you want to release to the release repository directly, you can add parameter `-DautoReleaseAfterClose=true` to the command line:
-
-```bash
-mvn clean deploy -Prelease -DautoReleaseAfterClose=true
-```
 
 ### Manually Publish the site to github pages
 
