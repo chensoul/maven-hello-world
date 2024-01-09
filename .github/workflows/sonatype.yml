@@ -23,7 +23,7 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Deploy to Sonatype
-        run: ./mvnw deploy -DskipTests -B -V -Prelease -s ./.mvn/settings.xml
+        run: ./mvnw deploy -DskipTests -B -ntp -V -Prelease -s ./.mvn/settings.xml
         env:
           CI_DEPLOY_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           CI_DEPLOY_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
