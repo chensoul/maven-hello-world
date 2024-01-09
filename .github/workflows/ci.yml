@@ -1,57 +1,32 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: Java CI
 
-on:
-  push:
-    branches: [ main, master ]
-    paths-ignore:
-      - '.dockerignore'
-      - '.github/**'
-      - '.gitattributes'
-      - '.gitignore'
-      - 'Dockerfile'
-      - 'editorconfig'
-      - 'gitmoji.md'
-      - 'CHANGELOG.md'
-      - 'LICENSE'
-      - 'README*'
-  pull_request:
-    branches: [ main, master ]
-    paths-ignore:
-      - '.dockerignore'
-      - '.github/**'
-      - '.gitattributes'
-      - '.gitignore'
-      - 'Dockerfile'
-      - 'editorconfig'
-      - 'gitmoji.md'
-      - 'CHANGELOG.md'
-      - 'LICENSE'
-      - 'README*'
+on: [ workflow_dispatch, push, pull_request ]
 
 jobs:
   build:
-    name: Build
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
-        java-version: [ 8, 11, 17 ]
-        os: [ "ubuntu-latest" ]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        java: [ 8 ]
+        distribution: [ 'zulu' ]
+      fail-fast: false
+      max-parallel: 4
+    name: Test JDK ${{ matrix.java }}, ${{ matrix.os }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK ${{ matrix.java-version }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK ${{ matrix.java }} ${{ matrix.distribution }}
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java-version }}
-          distribution: 'temurin'
-
-      - name: Cache modules
+          java-version: ${{ matrix.java }}
+          distribution: ${{ matrix.distribution }}
+      - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: |
@@ -59,31 +34,17 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('pom.xml', '**/pom.xml', '**/**/pom.xml') }}
           restore-keys: |
             ${{ matrix.os }}-
-
-      - name: CI ENV
-        shell: sh
-        run: |
-          env
-          echo $GITHUB_RUN_ID
-          echo $GITHUB_JOB-${{ matrix.java-version }}
-          echo "CI_PIPELINE_ID=$GITHUB_RUN_ID" >> $GITHUB_ENV
-          echo "CI_JOB_ID=$GITHUB_JOB-${{ matrix.java-version }}" >> $GITHUB_ENV
-
-      - name: Build with Maven
-        run: mvn clean -e -U package source:jar javadoc:jar install -DskipTests
+      - name: Test with Maven
+        run: ./mvnw test -B -V -ntp
 
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
     name: Dependabot
-    # 需要所有 build 完成后，才运行
     needs: build
     runs-on: ${{ matrix.os }}
     permissions:
-      # 可以修改仓库中的文件内容
       contents: write
-      # # 可以新建或修改 Pull Request
       pull-requests: write
-    # 依赖机器人 && 仅PR
     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
     strategy:
       matrix:
@@ -93,16 +54,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # 获取所有的代码历史记录，包括分支和标签
           fetch-depth: 0
-
       - name: Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@v1
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: echo
+      - name: ENV
         run: |
           echo ${{ github.event.pull_request.html_url }}
           echo ${{ steps.metadata.outputs.dependency-names }}
