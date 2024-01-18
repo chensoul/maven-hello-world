@@ -71,7 +71,7 @@ jobs:
           cache: maven
 
       - name: Cache modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-modules
         with:
           path: |
