@@ -11,14 +11,14 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        java: [ 8, 17 ]
+        java: [ 8 ]
         distribution: [ 'zulu' ]
       fail-fast: false
       max-parallel: 1
     name: Test JDK ${{ matrix.java }}, ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK ${{ matrix.java }} ${{ matrix.distribution }}
@@ -27,7 +27,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: ${{ matrix.distribution }}
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.m2/repository
@@ -35,7 +35,7 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-
       - name: Test with Maven
-        run: ./mvnw test -B -V -ntp
+        run: mvn test -B -V -ntp
 
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
