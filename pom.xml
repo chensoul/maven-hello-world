@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.chensoul</groupId>
-        <artifactId>chensoul-parent</artifactId>
-        <version>1.0.40</version>
-    </parent>
-
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
     <groupId>com.chensoul</groupId>
-    <artifactId>maven-hello-world</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.34-SNAPSHOT</version>
+    <artifactId>chensoul-parent</artifactId>
+    <version>1.0.40</version>
+  </parent>
 
-    <name>${project.artifactId}</name>
-    <description>A lightweight Maven hello world</description>
-    <inceptionYear>2023</inceptionYear>
-    <url>https://chensoul.github.io/maven-hello-world/</url>
+  <groupId>com.chensoul</groupId>
+  <artifactId>maven-hello-world</artifactId>
+  <packaging>jar</packaging>
+  <version>0.0.34</version>
 
-    <scm>
-        <url>https://github.com/chensoul/maven-hello-world/</url>
-        <connection>scm:git:https://github.com/chensoul/maven-hello-world.git</connection>
-        <developerConnection>scm:git:https://github.com/chensoul/maven-hello-world.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+  <name>${project.artifactId}</name>
+  <description>A lightweight Maven hello world</description>
+  <inceptionYear>2023</inceptionYear>
+  <url>https://chensoul.github.io/maven-hello-world/</url>
 
-    <issueManagement>
-        <system>Github</system>
-        <url>https://github.com/chensoul/maven-hello-world/issues</url>
-    </issueManagement>
-    <ciManagement>
-        <system>Github Actions</system>
-        <url>https://github.com/chensoul/maven-hello-world/actions</url>
-    </ciManagement>
-    <distributionManagement>
-        <repository>
-            <!-- The ID must be the same as the value of the server element id in the settings.xml -->
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <site>
-            <id>github</id>
-            <url>scm:git:ssh://git@github.com/chensoul/maven-hello-world.git</url>
-        </site>
-    </distributionManagement>
+  <scm>
+    <url>https://github.com/chensoul/maven-hello-world/</url>
+    <connection>scm:git:https://github.com/chensoul/maven-hello-world.git</connection>
+    <developerConnection>scm:git:https://github.com/chensoul/maven-hello-world.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+  <issueManagement>
+    <system>Github</system>
+    <url>https://github.com/chensoul/maven-hello-world/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>Github Actions</system>
+    <url>https://github.com/chensoul/maven-hello-world/actions</url>
+  </ciManagement>
+  <distributionManagement>
+    <repository>
+      <!-- The ID must be the same as the value of the server element id in the settings.xml -->
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <site>
+      <id>github</id>
+      <url>scm:git:ssh://git@github.com/chensoul/maven-hello-world.git</url>
+    </site>
+  </distributionManagement>
 
-    <repositories>
-        <!-- 如果使用浏览器访问时，需要添加 groupId 才显示内容 -->
-        <repository>
-            <id>oss-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-        <repository>
-            <id>oss-snapshots-s01</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+  <repositories>
+    <!-- 如果使用浏览器访问时，需要添加 groupId 才显示内容 -->
+    <repository>
+      <id>oss-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>oss-snapshots-s01</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>
