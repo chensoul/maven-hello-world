@@ -1,31 +1,16 @@
-<!--
-Thanks for contributing to this project. Please review the following notes before
-submitting a pull request.
+# Description
 
-Please submit only genuine pull-requests. Do not use this repository as a GitHub
-playground.
+###### _Short description of your task_
 
-Dependency Upgrades
+# Task
 
-Please do not open a pull request for a straightforward dependency upgrade (one that
-only updates the version property). We have a semi-automated process for such upgrades
-that we prefer to use. However, if the upgrade is more involved (such as requiring
-changes for removed or deprecated API) your pull request is most welcome.
+###### _Link to your task(s) in Jira_
 
-Describing Your Changes
+# Test
 
-If, having reviewed the notes above, you're ready to submit your pull request, please
-provide a brief description of the proposed changes. If they fix a bug, please
-describe the broken behaviour and how the changes fix it. If they make an enhancement,
-please describe the new functionality and why you believe it's useful. If your pull
-request relates to any existing issues, please reference them by using the issue number
-prefixed with #.
--->
+- ###### _A short description to test your PR_
 
-## Describing Your Changes
+# PR Dependencies
 
-## Checklist before requesting a review
-- [ ] I have performed a self-review of my code
-- [ ] If it is a core feature, I have added thorough tests.
-- [ ] Do we need to implement analytics?
-- [ ] Will this be part of a product update? If yes, please write one phrase about this update.
+- None
+
