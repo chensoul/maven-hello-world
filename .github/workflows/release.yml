@@ -30,10 +30,15 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
 
-      - name: Maven Release
-        run: mvn -ntp -B -U clean source:jar javadoc:jar deploy -P release -DskipTests
+      - name: Publish to Apache Maven
+        run: mvn -ntp -B -U clean deploy -P release -DskipTests
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
           # https://maven.apache.org/plugins/maven-gpg-plugin/usage.html#sign-artifacts-with-gnupg
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
