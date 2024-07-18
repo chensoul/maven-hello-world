@@ -1,0 +1,39 @@
+name: Release Version
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "*" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[CI Skip]')"
+
+    strategy:
+      matrix:
+        java: [ '8']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Java ${{ matrix.Java }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+          cache: maven
+          server-id: ossrh
+          server-username: OSSRH_USERNAME
+          server-password: OSSRH_TOKEN
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+
+      - name: Publish to Apache Maven Central
+        run: mvn clean deploy --ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          # https://maven.apache.org/plugins/maven-gpg-plugin/usage.html#sign-artifacts-with-gnupg
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}

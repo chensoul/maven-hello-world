@@ -28,4 +28,7 @@ updates:
       interval: "daily"
       time: "00:00"
       timezone: "Asia/Shanghai"
-  #    ignore:
+      ignore:
+        - dependency-name: "com.puppycrawl.tools:checkstyle"
+          versions:
+            - ">= 9"
