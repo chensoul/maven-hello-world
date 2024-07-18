@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Java ${{ matrix.Java }}
+      - name: Set up JDK ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'

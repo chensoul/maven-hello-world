@@ -4,6 +4,8 @@ on:
   push:
     branches: [ "main" ]
     tags: [ "*" ]
+  release:
+    types: [ created ]
 
 jobs:
   build:
@@ -18,13 +20,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java ${{ matrix.Java }}
+      - name: Set up JDK ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
           cache: maven
-          server-id: ossrh
+          server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: OSSRH_USERNAME
           server-password: OSSRH_TOKEN
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
@@ -35,10 +37,4 @@ jobs:
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          # https://maven.apache.org/plugins/maven-gpg-plugin/usage.html#sign-artifacts-with-gnupg
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
-      - name: Publish to GitHub Packages Apache Maven
-        run: mvn deploy -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
