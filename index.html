@@ -226,15 +226,17 @@ Successfully deployed SNAPSHOT versions will be found in <a href="https://s01.os
 </code></pre>
 <p>Release to the staging repositorywith the release profile:</p>
 
-<pre><code class="language-bash">mvn clean deploy -P release
+<pre><code class="language-bash">mvn -ntp -B -U clean deploy -P release
 </code></pre>
-<p>And then login to the staging repository <a href="https://s01.oss.sonatype.org/#stagingRepositories" class="externalLink">https://s01.oss.sonatype.org/#stagingRepositories</a> , release and drop the repository.
-Wait a few minutes and then you can find the release version in <a href="https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/" class="externalLink">https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/</a>
+<p>And then login to the staging repository <a href="https://s01.oss.sonatype.org/#stagingRepositories" class="externalLink">https://s01.oss.sonatype.org/#stagingRepositories</a> , release and drop the
+repository.
+Wait a few minutes and then you can find the release version
+in <a href="https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/" class="externalLink">https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/</a>
 or <a href="https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/" class="externalLink">https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/</a> .</p></section><section><a id="Manually_Publish_the_site_to_github_pages"></a>
 <h3>Manually Publish the site to github pages</h3>
 <p>Publish to github pages:</p>
 
-<pre><code class="language-bash">mvn clean site scm-publish:publish-scm
+<pre><code class="language-bash">mvn -ntp -B -U clean site scm-publish:publish-scm -Dscmpublish.serverId=github
 </code></pre></section></section></section>
         </main>
       </div>
