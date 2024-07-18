@@ -165,18 +165,19 @@ mvn clean install
 Release to the staging repositorywith the release profile:
 
 ```bash
-mvn clean deploy -P release
+mvn -ntp -B -U clean deploy -P release
 ```
 
-And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the repository.
-Wait a few minutes and then you can find the release version in https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/
+And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the
+repository.
+Wait a few minutes and then you can find the release version
+in https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/
 or https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/ .
-
 
 ### Manually Publish the site to github pages
 
 Publish to github pages:
 
 ```bash
-mvn clean site scm-publish:publish-scm
+mvn -ntp -B -U clean site scm-publish:publish-scm -Dscmpublish.serverId=github
 ```
