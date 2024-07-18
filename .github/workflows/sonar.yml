@@ -26,8 +26,8 @@ jobs:
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6
         with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
       - name: Build and analyze
         run: mvn verify sonar:sonar -B -ntp -Djava.version=17 -Dsonar.projectKey=chensoul_parent -Dsonar.organization=chensoul -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN
