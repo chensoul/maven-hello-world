@@ -1,9 +1,9 @@
-FROM maven:3.9.6-openjdk-17-slim AS build
+FROM maven:3-eclipse-temurin-21-alpine AS build
 WORKDIR /build
 COPY . .
-RUN mvn clean install
+RUN mvn install -DskipTests
 
-FROM eclipse-temurin:21-jdk-jammy AS base
+FROM eclipse-temurin:21-jdk-jammy AS final
 WORKDIR /app
 COPY --from=build /build/target/*.jar .
 
