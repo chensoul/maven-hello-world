@@ -1,4 +1,4 @@
-name: Release Version
+name: Maven Release
 
 on:
   push:
@@ -12,13 +12,13 @@ jobs:
 
     strategy:
       matrix:
-        java: [ '8']
+        java: [ '8' ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Java ${{ matrix.Java }}
+      - name: Set up Java ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -30,8 +30,8 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
 
-      - name: Publish to Apache Maven Central
-        run: mvn clean deploy --ntp --batch-mode --update-snapshots -P release -Dmaven.javadoc.skip=true -DskipTests
+      - name: Maven Release
+        run: mvn -ntp -B -U clean source:jar javadoc:jar deploy -P release -DskipTests
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}

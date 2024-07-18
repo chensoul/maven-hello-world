@@ -43,7 +43,7 @@ jobs:
 
       - name: Publish site to github pages
         run: |
-          mvn --ntp --batch-mode --update-snapshots clean site scm-publish:publish-scm -Dscmpublish.serverId=github
+          mvn -ntp -B -U clean site scm-publish:publish-scm -Dscmpublish.serverId=github
         env:
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
