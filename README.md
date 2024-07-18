@@ -25,12 +25,11 @@ Login to your [sonatype](https://s01.oss.sonatype.org/) account to release the v
 
 ## Secrets
 
-* **GPG_PRIVATE_KEY** - Take it from the private.gpg
 * **OSSRH_USERNAME** - Created [here](https://issues.sonatype.org/)
 * **OSSRH_TOKEN** - Created [here](https://issues.sonatype.org/)
-* **GPG_PASSPHRASE** - Create [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
+* **MAVEN_GPG_PRIVATE_KEY** - Take it from the private.gpg
+* **MAVEN_GPG_PASSPHRASE** - Create [here](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair)
     * This passphrase and your private key are all that is needed to sign artifacts with your signature.
-* **GITHUB_TOKEN** - Github token
 
 ## Demo
 
@@ -109,13 +108,13 @@ You can list the local key that you created:
 gpg --list-secret-keys --keyid-format=long
 ```
 
-Then you can export the private key to your local machine in order to upload it later to Github secret:
+Then you can export the private key:
 
 ```bash
-gpg --armor --export-secret-keys <YOUR_KEY> > private.gpg
+gpg --armor --export-secret-keys <YOUR_KEY> 
 ```
 
-* YOUR_KEY='long number'
+Input your passphrase and then you can copy the output to the Github secret for MAVEN_GPG_PRIVATE_KEY.
 
 ## Local commands
 
@@ -124,7 +123,7 @@ Check your maven settings file `～/.m2/settings.xml`:
 ```bash
     <server>
         <id>gpg.passphrase</id>
-        <passphrase><PASSPHRASE_GPG></passphrase>
+        <passphrase><MAVEN_GPG_PASSPHRASE></passphrase>
     </server>
     <server>
         <id>ossrh</id>
@@ -162,14 +161,12 @@ Install to local repository `~/.m2/repository`:
 mvn clean install
 ```
 
-Release to the staging repositorywith the release profile:
+Release to the staging repository with the release profile:
 
 ```bash
 mvn -ntp -B -U clean deploy -P release
 ```
 
-And then login to the staging repository https://s01.oss.sonatype.org/#stagingRepositories , release and drop the
-repository.
 Wait a few minutes and then you can find the release version
 in https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/
 or https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/ .
