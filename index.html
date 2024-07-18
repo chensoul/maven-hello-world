@@ -111,15 +111,14 @@ of <a href="https://dzone.com/articles/how-to-publish-artifacts-to-maven-central
 <h2>Secrets</h2>
 <ul>
 
-<li><strong>GPG_PRIVATE_KEY</strong> - Take it from the private.gpg</li>
 <li><strong>OSSRH_USERNAME</strong> - Created <a href="https://issues.sonatype.org/" class="externalLink">here</a></li>
 <li><strong>OSSRH_TOKEN</strong> - Created <a href="https://issues.sonatype.org/" class="externalLink">here</a></li>
-<li><strong>GPG_PASSPHRASE</strong> - Create <a href="https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair" class="externalLink">here</a>
+<li><strong>MAVEN_GPG_PRIVATE_KEY</strong> - Take it from the private.gpg</li>
+<li><strong>MAVEN_GPG_PASSPHRASE</strong> - Create <a href="https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair" class="externalLink">here</a>
 <ul>
 
 <li>This passphrase and your private key are all that is needed to sign artifacts with your signature.</li>
 </ul></li>
-<li><strong>GITHUB_TOKEN</strong> - Github token</li>
 </ul></section><section><a id="Demo"></a>
 <h2>Demo</h2>
 <p>How do you release a version?</p>
@@ -184,20 +183,17 @@ by <a href="https://central.sonatype.org/publish/requirements/gpg/#generating-a-
 
 <pre><code class="language-bash">gpg --list-secret-keys --keyid-format=long
 </code></pre>
-<p>Then you can export the private key to your local machine in order to upload it later to Github secret:</p>
+<p>Then you can export the private key:</p>
 
-<pre><code class="language-bash">gpg --armor --export-secret-keys &lt;YOUR_KEY&gt; &gt; private.gpg
+<pre><code class="language-bash">gpg --armor --export-secret-keys &lt;YOUR_KEY&gt; 
 </code></pre>
-<ul>
-
-<li>YOUR_KEY=&#x2018;long number&#x2019;</li>
-</ul></section><section><a id="Local_commands"></a>
+<p>Input your passphrase and then you can copy the output to the Github secret for MAVEN_GPG_PRIVATE_KEY.</p></section><section><a id="Local_commands"></a>
 <h2>Local commands</h2>
 <p>Check your maven settings file <code>&#xff5e;/.m2/settings.xml</code>:</p>
 
 <pre><code class="language-bash">    &lt;server&gt;
         &lt;id&gt;gpg.passphrase&lt;/id&gt;
-        &lt;passphrase&gt;&lt;PASSPHRASE_GPG&gt;&lt;/passphrase&gt;
+        &lt;passphrase&gt;&lt;MAVEN_GPG_PASSPHRASE&gt;&lt;/passphrase&gt;
     &lt;/server&gt;
     &lt;server&gt;
         &lt;id&gt;ossrh&lt;/id&gt;
@@ -224,13 +220,11 @@ Successfully deployed SNAPSHOT versions will be found in <a href="https://s01.os
 
 <pre><code class="language-bash">mvn clean install
 </code></pre>
-<p>Release to the staging repositorywith the release profile:</p>
+<p>Release to the staging repository with the release profile:</p>
 
 <pre><code class="language-bash">mvn -ntp -B -U clean deploy -P release
 </code></pre>
-<p>And then login to the staging repository <a href="https://s01.oss.sonatype.org/#stagingRepositories" class="externalLink">https://s01.oss.sonatype.org/#stagingRepositories</a> , release and drop the
-repository.
-Wait a few minutes and then you can find the release version
+<p>Wait a few minutes and then you can find the release version
 in <a href="https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/" class="externalLink">https://central.sonatype.com/artifact/com.chensoul/maven-hello-world/</a>
 or <a href="https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/" class="externalLink">https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world/</a> .</p></section><section><a id="Manually_Publish_the_site_to_github_pages"></a>
 <h3>Manually Publish the site to github pages</h3>
