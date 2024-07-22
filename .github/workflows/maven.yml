@@ -10,32 +10,39 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        java: [ '8', '11', '17', '21' ]
-
+        java-version: [ 21 ]
+        os: [ ubuntu-latest ]
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK ${{ matrix.Java }}
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v4
         with:
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
-          java-version: ${{ matrix.java }}
           cache: maven
 
-      - name: Build with Maven
-        run: mvn -ntp -B -U clean package
+      - name: Test with Maven
+        run: mvn -ntp dependency:go-offline test
 
-      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-      - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      - name: Package with Maven
+        run: mvn -ntp package -DskipTests
+
+#      - name: Build and Push Docker Image
+#        env:
+#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+#          IMAGE_NAME: ${{ github.event.repository.name }}
+#        run: |
+#          docker build . --file Dockerfile -t $DOCKER_USERNAME/$IMAGE_NAME:latest
+#          docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+#          docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
