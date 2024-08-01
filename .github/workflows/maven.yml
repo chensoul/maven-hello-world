@@ -35,3 +35,13 @@ jobs:
 
       - name: Build with Maven
         run: mvn -ntp -B -U clean package
+
+#      - name: Build and Push Docker Image
+#        env:
+#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+#          IMAGE_NAME: ${{ github.event.repository.name }}
+#        run: |
+#          docker build . --file Dockerfile -t $DOCKER_USERNAME/$IMAGE_NAME:latest
+#          docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+#          docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
