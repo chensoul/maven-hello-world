@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.chensoul</groupId>
         <artifactId>chensoul-parent</artifactId>
         <version>1.1.4</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>com.chensoul</groupId>
     <artifactId>maven-hello-world</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>${project.artifactId}</name>
     <description>A lightweight Maven hello world</description>
@@ -23,7 +22,7 @@
         <url>https://github.com/chensoul/maven-hello-world.git</url>
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
-        <tag>HEAD</tag>
+        <tag>maven-hello-world-1.0.0</tag>
     </scm>
 
     <issueManagement>
