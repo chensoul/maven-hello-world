@@ -10,39 +10,28 @@ name: Java CI with Maven
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        java-version: [ 21 ]
-        os: [ ubuntu-latest ]
+        java: [ '8', '11', '17', '21' ]
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up JDK ${{ matrix.java-version }}
+      - name: Set up JDK ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
+          java-version: ${{ matrix.java }}
           cache: maven
 
-      - name: Test with Maven
-        run: mvn -ntp dependency:go-offline test
-
-      - name: Package with Maven
-        run: mvn -ntp package -DskipTests
-
-#      - name: Build and Push Docker Image
-#        env:
-#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-#          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-#          IMAGE_NAME: ${{ github.event.repository.name }}
-#        run: |
-#          docker build . --file Dockerfile -t $DOCKER_USERNAME/$IMAGE_NAME:latest
-#          docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
-#          docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
+      - name: Build with Maven
+        run: mvn -ntp -B -U clean package
